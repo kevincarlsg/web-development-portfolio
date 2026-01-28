@@ -1,0 +1,65 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect HTTP to HTTPS (if applicable)
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_mime.c>
+    # Add MIME Types for CSS and JS
+    AddType text/css .css
+    AddType application/javascript .js
+</IfModule>
+
+# Forzar el tipo MIME para CSS
+<FilesMatch "\.css$">
+    ForceType text/css
+</FilesMatch>
+
+# Set Charset to UTF-8 (Solo para HTML y PHP)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|php)$">
+        Header set Content-Type "text/html; charset=UTF-8"
+    </FilesMatch>
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header always set Access-Control-Allow-Headers "Authorization, Content-Type"
+    Header always edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
+</IfModule>
+
+# Caching Rules for Static Resources
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+</IfModule>
+
