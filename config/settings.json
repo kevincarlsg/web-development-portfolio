@@ -1,0 +1,21 @@
+{
+    "company": {
+        "name": "UrbanVibe",
+        "address": "Calle Jardines del Sol #742, Colonia Valle Dorado, Metepec, Estado de México, 52199",
+        "email": "UrbanVibe@UrbanVibe.com",
+        "phone": "+57 123 456 7890",
+        "logo": "/img/settings/logo-6255.png",
+        "entry": "La empresa de tecnolog\u00eda l\u00edder en comercio electr\u00f3nico y soluciones fintech de Am\u00e9rica Latina. Nuestro prop\u00f3sito es democratizar el comercio y los servicios financieros para transformar la vida de millones de personas en la regi\u00f3n."
+    },
+    "rates": {
+        "tax": 8,
+        "shipping": 6000,
+        "freeShipping": "900000"
+    },
+    "social": {
+        "facebook": "https://www.facebook.com/",
+        "twitter": "https://twitter.com/",
+        "instagram": "https://www.instagram.com/",
+        "ws": "https://www.tiktok.com/"
+    }
+}
