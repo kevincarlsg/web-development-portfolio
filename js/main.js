@@ -38,6 +38,9 @@ const modal = document.getElementById('projectModal');
 const modalBody = document.getElementById('modalBody');
 const closeBtn = document.getElementById('closeBtn');
 
+let activeImages = [];
+let currentImageIndex = 0;
+
 const closeModal = () => {
   modal.style.display = 'none';
   modalBody.innerHTML = '';
@@ -56,30 +59,34 @@ document.addEventListener('keydown', e => {
 
 
 /* =========================
-   VIDEO MODAL
+   VIDEO MODAL (YOUTUBE FIX)
 ========================= */
-function openVideoModal(src) {
+function openVideoModal(url) {
+  const videoId = url.includes("youtu.be")
+    ? url.split("youtu.be/")[1].split("?")[0]
+    : url.split("v=")[1].split("&")[0];
+
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+
   modalBody.innerHTML = `
     <div class="video-wrapper">
-      <video class="modal-video" controls autoplay>
-        <source src="${src}" type="video/mp4">
-        Tu navegador no soporta el video.
-      </video>
+      <iframe
+        class="modal-video"
+        src="${embedUrl}"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+      </iframe>
     </div>
   `;
-  modal.style.display = 'flex';
 
-  const video = modalBody.querySelector('video');
-  if (video) video.playbackRate = 1.75;
+  modal.style.display = 'flex';
 }
 
 
 /* =========================
    GALLERY SLIDER
 ========================= */
-let activeImages = [];
-let currentImageIndex = 0;
-
 function setupGallery(images) {
   activeImages = images;
   currentImageIndex = 0;
@@ -151,11 +158,28 @@ function renderProjects() {
       let buttons = '';
 
       if (p.videoSource) {
-        buttons += `<button class="btn-demo" onclick="openVideoModal('${p.videoSource}')">Ver Demo</button>`;
+        buttons += `
+          <button class="btn-demo"
+            onclick="openVideoModal('${p.videoSource}')">
+            Ver Demo
+          </button>`;
       }
 
-      buttons += `<button class="btn-gallery" onclick='setupGallery(${JSON.stringify(p.gallery)})'>Ver Galería</button>`;
-      buttons += `<a href="${p.github}" class="btn-github" target="_blank" rel="noopener noreferrer">GitHub</a>`;
+      buttons += `
+        <button class="btn-gallery"
+          onclick='setupGallery(${JSON.stringify(p.gallery)})'>
+          Ver Galería
+        </button>
+      `;
+
+      buttons += `
+        <a href="${p.github}"
+          class="btn-github"
+          target="_blank"
+          rel="noopener noreferrer">
+          GitHub
+        </a>
+      `;
 
       return `
         <article class="project-card">
