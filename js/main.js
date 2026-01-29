@@ -59,7 +59,7 @@ document.addEventListener('keydown', e => {
 
 
 /* =========================
-   VIDEO MODAL (YOUTUBE FIX)
+   VIDEO MODAL (YOUTUBE)
 ========================= */
 function openVideoModal(url) {
   const videoId = url.includes("youtu.be")
@@ -135,15 +135,12 @@ function renderTools() {
     .map(cat => `
       <h4 class="category-title">${cat.title}</h4>
       <div class="tools-grid">
-        ${cat.tools
-          .map(
-            t => `
+        ${cat.tools.map(t => `
           <div class="tool-card">
             <i class="${t.icon}"></i>
             <span>${t.name}</span>
-          </div>`
-          )
-          .join('')}
+          </div>
+        `).join('')}
       </div>
     `)
     .join('');
