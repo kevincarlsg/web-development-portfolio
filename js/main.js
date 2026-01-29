@@ -41,11 +41,11 @@ const closeBtn = document.getElementById('closeBtn');
 let activeImages = [];
 let currentImageIndex = 0;
 
-const closeModal = () => {
+function closeModal() {
   modal.style.display = 'none';
   modalBody.innerHTML = '';
   activeImages = [];
-};
+}
 
 closeBtn.onclick = closeModal;
 
@@ -62,9 +62,13 @@ document.addEventListener('keydown', e => {
    VIDEO MODAL (YOUTUBE)
 ========================= */
 function openVideoModal(url) {
-  const videoId = url.includes("youtu.be")
-    ? url.split("youtu.be/")[1].split("?")[0]
-    : url.split("v=")[1].split("&")[0];
+  let videoId = '';
+
+  if (url.includes('youtu.be')) {
+    videoId = url.split('youtu.be/')[1].split('?')[0];
+  } else if (url.includes('watch?v=')) {
+    videoId = url.split('v=')[1].split('&')[0];
+  }
 
   const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
 
@@ -103,6 +107,7 @@ function updateGallery() {
       </div>
       <button class="next">&#10095;</button>
     </div>
+
     <div class="counter-display">
       ${currentImageIndex + 1} / ${activeImages.length}
     </div>
@@ -159,7 +164,8 @@ function renderProjects() {
           <button class="btn-demo"
             onclick="openVideoModal('${p.videoSource}')">
             Ver Demo
-          </button>`;
+          </button>
+        `;
       }
 
       buttons += `
@@ -183,6 +189,7 @@ function renderProjects() {
           <div class="project-image">
             <img src="${p.mainImage}" alt="${p.title}">
           </div>
+
           <div class="project-content">
             <h4>${p.title}</h4>
             <p>${p.description}</p>
