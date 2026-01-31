@@ -54,7 +54,7 @@ const PORTFOLIO_DATA = {
       mainImage: "assets/images/VirtualLearn.png",
       description: "Sistema de aprendizaje por suscripción para unidades académicas. Permite el acceso gratuito a videos introductorios y bloquea el contenido avanzado tras un muro de pago (Paywall) con gestión de suscripciones mensuales.",
       tech: "PHP · Css · MySQL · JS · Bootstrap",
-      videoSource: "https://youtu.be/V7nR2dpHMXU?si=rVjv5KDkWCZGWZHn",
+      videoSource: "V7nR2dpHMXU",
       github: "https://github.com/kevincarlsg/web-development-portfolio/tree/main/proyecto-streaming",
       gallery: [
         "assets/images/vir.png",
@@ -132,4 +132,3 @@ const PORTFOLIO_DATA = {
     }
   ]
 };
-
