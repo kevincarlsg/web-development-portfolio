@@ -38,14 +38,11 @@ const modal = document.getElementById('projectModal');
 const modalBody = document.getElementById('modalBody');
 const closeBtn = document.getElementById('closeBtn');
 
-let activeImages = [];
-let currentImageIndex = 0;
-
-function closeModal() {
+const closeModal = () => {
   modal.style.display = 'none';
   modalBody.innerHTML = '';
   activeImages = [];
-}
+};
 
 closeBtn.onclick = closeModal;
 
@@ -59,38 +56,30 @@ document.addEventListener('keydown', e => {
 
 
 /* =========================
-   VIDEO MODAL (YOUTUBE)
+   VIDEO MODAL (YouTube)
 ========================= */
-function openVideoModal(url) {
-  let videoId = '';
-
-  if (url.includes('youtu.be')) {
-    videoId = url.split('youtu.be/')[1].split('?')[0];
-  } else if (url.includes('watch?v=')) {
-    videoId = url.split('v=')[1].split('&')[0];
-  }
-
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
-
+function openVideoModal(videoId) {
   modalBody.innerHTML = `
     <div class="video-wrapper">
       <iframe
-        class="modal-video"
-        src="${embedUrl}"
+        src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1"
         frameborder="0"
-        allow="autoplay; encrypted-media"
+        allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen>
       </iframe>
     </div>
   `;
-
   modal.style.display = 'flex';
 }
+
 
 
 /* =========================
    GALLERY SLIDER
 ========================= */
+let activeImages = [];
+let currentImageIndex = 0;
+
 function setupGallery(images) {
   activeImages = images;
   currentImageIndex = 0;
@@ -107,7 +96,6 @@ function updateGallery() {
       </div>
       <button class="next">&#10095;</button>
     </div>
-
     <div class="counter-display">
       ${currentImageIndex + 1} / ${activeImages.length}
     </div>
@@ -140,12 +128,15 @@ function renderTools() {
     .map(cat => `
       <h4 class="category-title">${cat.title}</h4>
       <div class="tools-grid">
-        ${cat.tools.map(t => `
+        ${cat.tools
+          .map(
+            t => `
           <div class="tool-card">
             <i class="${t.icon}"></i>
             <span>${t.name}</span>
-          </div>
-        `).join('')}
+          </div>`
+          )
+          .join('')}
       </div>
     `)
     .join('');
@@ -160,36 +151,17 @@ function renderProjects() {
       let buttons = '';
 
       if (p.videoSource) {
-        buttons += `
-          <button class="btn-demo"
-            onclick="openVideoModal('${p.videoSource}')">
-            Ver Demo
-          </button>
-        `;
+        buttons += `<button class="btn-demo" onclick="openVideoModal('${p.videoSource}')">Ver Demo</button>`;
       }
 
-      buttons += `
-        <button class="btn-gallery"
-          onclick='setupGallery(${JSON.stringify(p.gallery)})'>
-          Ver Galería
-        </button>
-      `;
-
-      buttons += `
-        <a href="${p.github}"
-          class="btn-github"
-          target="_blank"
-          rel="noopener noreferrer">
-          GitHub
-        </a>
-      `;
+      buttons += `<button class="btn-gallery" onclick='setupGallery(${JSON.stringify(p.gallery)})'>Ver Galería</button>`;
+      buttons += `<a href="${p.github}" class="btn-github" target="_blank" rel="noopener noreferrer">GitHub</a>`;
 
       return `
         <article class="project-card">
           <div class="project-image">
             <img src="${p.mainImage}" alt="${p.title}">
           </div>
-
           <div class="project-content">
             <h4>${p.title}</h4>
             <p>${p.description}</p>
